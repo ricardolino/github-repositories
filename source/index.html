@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>App</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="styles/bundle.min.css" />
+</head>
+<body ng-app="app" ng-strict-di>
+    <a class="button home" ui-sref="home">Home</a>
+    <a class="button trail" ui-sref="trail">Trail</a>
+    <ui-view></ui-view>
+
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+    <script src="scripts/bundle.min.js"></script>
+</body>
+</html>

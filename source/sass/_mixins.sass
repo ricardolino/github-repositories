@@ -1,0 +1,36 @@
+=icon($imageName, $width, $height)
+    background:
+        image: url(../images/#{$imageName})
+        repeat: no-repeat
+        position: center center
+    width: $width
+    height: $height
+    display: inline-block
+    text-indent: -99999em
+    overflow: hidden
+
+=clearfix
+    &:after
+        display: table
+        content: ''
+        clear: both
+
+=font-face($family, $path, $svg, $weight, $style)
+    @font-face
+        font-family: $family
+        src: url('#{$path}.eot')
+        src: url('#{$path}.eot?#iefix') format('embedded-opentype'), url('#{$path}.woff') format('woff'), url('#{$path}.ttf') format('truetype'), url('#{$path}.svg##{$svg}') format('svg')
+        font-weight: $weight
+        font-style: $style
+
+=media4k
+    @media only screen and (min-width: 120em)
+        @content
+
+=mediafullhd
+    @media only screen and (min-width: 80em) and (max-width: 120em)
+        @content
+
+=mediahd
+    @media only screen and (max-width: 80em)
+        @content
