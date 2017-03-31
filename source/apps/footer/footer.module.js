@@ -2,5 +2,5 @@
     'use strict';
 
     angular
-        .module('app.trail', []);
+        .module('app.footer', []);
 }());

@@ -6,16 +6,23 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="lib/angular-material/angular-material.min.css" />
     <link rel="stylesheet" href="styles/bundle.min.css" />
 </head>
 <body ng-app="app" ng-strict-di>
-    <a class="button home" ui-sref="home">Home</a>
-    <a class="button trail" ui-sref="trail">Trail</a>
+
+    <app-header></app-header>
     <ui-view></ui-view>
+    <app-footer></app-footer>
 
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
-
+    <script src="lib/angular-aria/angular-aria.min.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <script src="lib/angular-material/angular-material.min.js"></script>
+    <script src="lib/chart.js/dist/Chart.bundle.min.js"></script>
+    <script src="lib/angular-chart.js/dist/angular-chart.min.js"></script>
     <script src="scripts/bundle.min.js"></script>
 </body>
 </html>

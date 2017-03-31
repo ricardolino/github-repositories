@@ -1,2 +1,38 @@
-<h1>{{ vm.userAgent }}</h1>
-<h1 id="home-title">This is the Home page.</h1>
+<div id="page-home">
+    <div id="section-search">
+        <md-autocomplete
+            class="search"
+            md-no-cache="true"
+            md-selected-item="vm.selectedItem"
+            md-items="repository in vm.querySearch(vm.searchText)"
+            md-search-text="vm.searchText"
+            md-item-text="repository.name"
+            md-min-length="0"
+            placeholder="Search repository by name">
+            <md-item-template>
+                <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{repository.name}}</span>
+            </md-item-template>
+        </md-autocomplete>
+    </div>
+
+    <div class="repositories">
+        <div ng-repeat="repository in vm.querySearch(vm.searchText) track by $index" class="repository">
+            <a class="headline-wrapper" ng-href="#!/repository/{{ repository.name }}">
+                <h3 class="headline">{{ repository.name }}</h3>
+            </a>
+            <h4 class="subhead" ng-if="repository.description">{{ repository.description }}</h4>
+            <div class="infos">
+                <span class="language {{ repository.language | slugify }}" ng-if="repository.language" title="Language">{{ repository.language }}</span>
+                <div class="counts">
+                    <span class="forks" ng-if="repository.forks_count" title="Forks">{{ repository.forks_count }}</span>
+                    <span class="stars" ng-if="repository.stargazers_count" title="Stargazers">{{ repository.stargazers_count }}</span>
+                    <span class="watchers" ng-if="repository.watchers_count" title="Watchers">{{ repository.watchers_count }}</span>
+                </div>
+                <div class="dates">
+                    <span class="created" ng-if="repository.created_at">{{ repository.created_at | date: "dd MMM yyyy" }}</span>
+                    <span class="updated" ng-if="repository.updated_at">{{ repository.updated_at | date: "dd MMM yyyy" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

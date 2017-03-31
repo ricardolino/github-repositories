@@ -3,8 +3,12 @@
 
     angular.module('app', [
         'ui.router'
+        , 'ngMaterial'
+        , 'chart.js'
+        , 'app.header'
+        , 'app.footer'
         , 'app.home'
-        , 'app.trail'
+        , 'app.repository'
         , 'app.utils'
     ]);
 }());

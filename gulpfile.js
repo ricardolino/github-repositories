@@ -22,14 +22,12 @@ var pkg = {
       src: {
               base: sourcePath
             , baseHTML: sourcePath + 'index.html'
-            , initJSON: sourcePath + 'init.json'
             , sass: sourcePath + 'sass/**/*.sass'
             , modulesSass: sourcePath + 'apps/**/*.sass'
             , js: sourcePath + 'apps/**/!(*.specs).js'
             , angularModules: sourcePath + 'apps/**/*.module.js'
             , angularTemplates: sourcePath + 'apps/**/*.html'
             , images: sourcePath + 'images/**/*'
-            , fonts: sourcePath + 'fonts/**/*'
         }
     , dest: './public/'
 };
@@ -43,11 +41,9 @@ gulp.task('default', [
 gulp.task('build', [
       'sass'
     , 'baseHTML'
-    , 'initJSON'
     , 'htmls'
     , 'scripts'
     , 'images'
-    , 'fonts'
 ]);
 
 /**
@@ -102,9 +98,9 @@ gulp.task('scripts', function () {
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(concat('bundle.min.js', {newLine: ';'}))
         .pipe(ngAnnotate({ add: true }))
-        .pipe(bytediff.start())
-        .pipe(uglify({mangle: true}))
-        .pipe(bytediff.stop())
+        // .pipe(bytediff.start())
+        // .pipe(uglify({mangle: true}))
+        // .pipe(bytediff.stop())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(pkg.dest + 'scripts/'))
         .pipe(stream());
@@ -119,27 +115,12 @@ gulp.task('baseHTML', function () {
         .pipe(stream());
 });
 
-gulp.task('initJSON', function () {
-    gulp.src(pkg.src.initJSON)
-        .pipe(gulp.dest(pkg.dest))
-        .pipe(stream());
-});
-
 /**
  * Copy images
  */
 gulp.task('images', function () {
     gulp.src(pkg.src.images)
         .pipe(gulp.dest(pkg.dest + 'images/'))
-        .pipe(stream());
-});
-
-/**
- * Copy fonts
- */
-gulp.task('fonts', function () {
-    gulp.src(pkg.src.fonts)
-        .pipe(gulp.dest(pkg.dest + 'fonts/'))
         .pipe(stream());
 });
 
@@ -161,5 +142,4 @@ gulp.task('watch', function () {
     gulp.watch([pkg.src.angularTemplates],          ['htmls']).on('change', reload);
     gulp.watch([pkg.src.baseHTML],                  ['baseHTML']).on('change', reload);
     gulp.watch([pkg.src.images],                    ['images']).on('change', reload);
-    gulp.watch([pkg.src.fonts],                     ['fonts']).on('change', reload);
 });

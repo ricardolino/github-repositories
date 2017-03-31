@@ -23,14 +23,14 @@
         font-weight: $weight
         font-style: $style
 
-=media4k
-    @media only screen and (min-width: 120em)
+=desktop
+    @media only screen and (min-width: 1000px)
         @content
 
-=mediafullhd
-    @media only screen and (min-width: 80em) and (max-width: 120em)
+=tablet
+    @media only screen and (min-width: 730px) and (max-width: 999px)
         @content
 
-=mediahd
-    @media only screen and (max-width: 80em)
+=mobile
+    @media only screen and (max-width: 729px)
         @content

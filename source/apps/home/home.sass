@@ -1,6 +1,156 @@
-#home-title
-    background: #ff0000
-    font-size: 30px
-    padding: 50px
-    color: #ffffff
-    transition: 1s ease
+@import '../../sass/mixins'
+@import '../../sass/defaults'
+
+#page-home
+    padding: 2%
+
+    .repositories
+        overflow: hidden
+
+    .repository
+        display: block
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
+        background: rgba(255, 255, 255, 1)
+        width: 48%
+        min-height: 10rem
+        margin: 1%
+        padding: 2%
+        float: left
+        position: relative
+
+        +mobile
+            width: 98%
+            min-height: 0
+            padding: 4%
+
+        .headline-wrapper
+            cursor: pointer
+            text-decoration: none
+            color: $secondary-color
+
+            &:hover
+                text-decoration: underline
+
+        .headline
+            font-size: 1.4rem
+            margin-bottom: 0.5rem
+
+            +mobile
+                font-size: 1.2rem
+
+        .subhead
+            font-size: 1rem
+            color: #555
+            display: block
+
+            +mobile
+                font-size: 0.8rem
+
+        .language
+            font-size: 0.8rem
+            color: #555
+            display: block
+            margin-bottom: 0.5rem
+
+            &.c
+                color: green
+
+            &.javascript
+                color: blue
+
+            &.swift
+                color: gray
+
+            &.java
+                color: orange
+
+            &.go
+                color: purple
+
+            &.python
+                color: yellow
+
+            &.ruby
+                color: red
+
+            &.php
+                color: brown
+
+            &:before
+                content: '• '
+
+        .infos
+            position: absolute
+            width: 92%
+            left: 0
+            right: 0
+            bottom: 8%
+            margin: 0 auto
+
+            +mobile
+                width: 100%
+                position: relative
+                margin-top: 0.5rem
+
+        .dates,
+        .counts
+            width: 50%
+
+        .counts
+            float: left
+
+            .watchers,
+            .stars,
+            .forks
+                font-size: 1rem
+                padding: 1px 3px
+                border-radius: 2px
+                border: 1px solid #ccc
+                display: inline-block
+
+                &::before
+                    content: ''
+                    margin-bottom: -2px
+
+            .watchers
+                &:before
+                    +icon('../../images/eye.svg', 1rem, 1rem)
+                    margin-right: 2px
+
+            .stars
+                &:before
+                    +icon('../../images/star.svg', 1rem, 1rem)
+
+            .forks
+                &:before
+                    +icon('../../images/repo-forked.svg', 1rem, 1rem)
+
+        .dates
+            float: right
+            text-align: right
+
+            .created,
+            .updated
+                display: block
+                font-weight: bold
+
+                &:before
+                    font-weight: normal
+
+            .created
+                &:before
+                    content: 'Created on '
+
+            .updated
+                &:before
+                    content: 'Updated on '
+
+
+    #section-search
+        background: $background-color
+        padding: 2%
+        margin: -2.1% -2% 2%
+
+        .search
+            width: 50%
+            margin: 0 auto
