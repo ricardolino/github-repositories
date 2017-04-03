@@ -1,4 +1,6 @@
-<canvas id="line" class="chart chart-line" chart-data="vm.data"
-chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options"
-chart-dataset-override="vm.datasetOverride">
-</canvas>
+<div id="page-repository">
+    <div class="chart">
+        <nvd3 options="vm.options"
+              data="vm.data" ng-if="vm.data[0].values"></nvd3>
+    </div>
+</div>

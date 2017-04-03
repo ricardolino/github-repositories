@@ -8,7 +8,7 @@
             md-search-text="vm.searchText"
             md-item-text="repository.name"
             md-min-length="0"
-            placeholder="Search repository by name">
+            placeholder="Search repository by name, description or language">
             <md-item-template>
                 <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{repository.name}}</span>
             </md-item-template>
@@ -16,7 +16,12 @@
     </div>
 
     <div class="repositories">
-        <div ng-repeat="repository in vm.querySearch(vm.searchText) track by $index" class="repository">
+        <div class="order-by">
+            <md-select class="select" placeholder="Order by" ng-model="vm.propertyName" ng-if="vm.querySearch(vm.searchText).length > 1">
+                <md-option class="option" ng-repeat="propertyName in vm.propertyNames" value="{{propertyName.slug}}">{{propertyName.name}}</md-option>
+            </md-select>
+        </div>
+        <div ng-cloak ng-repeat="repository in vm.querySearch(vm.searchText) | orderBy: vm.propertyName" class="repository">
             <a class="headline-wrapper" ng-href="#!/repository/{{ repository.name }}">
                 <h3 class="headline">{{ repository.name }}</h3>
             </a>
@@ -34,5 +39,8 @@
                 </div>
             </div>
         </div>
+        <h3 ng-cloak class="not-found" ng-if="vm.querySearch(vm.searchText).length <= 0 && vm.searchText">
+            Could not found any project using '{{ vm.searchText }}'.
+        </h3>
     </div>
 </div>

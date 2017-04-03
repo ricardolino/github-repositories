@@ -14,11 +14,11 @@
                 return;
             }
 
-            slug = input.toLowerCase().trim();
-
-            slug = slug.replace(/[^a-z0-9\s-]/g, ' ');
-
-            slug = slug.replace(/[\s-]+/g, '-');
+            slug = input.toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9\s-]/g, ' ')
+                .replace(/[\s-]+/g, '-')
+            ;
 
             if (slug[slug.length - 1] === '-') {
                 slug = slug.slice(0, -1);

@@ -6,51 +6,98 @@
         .controller('RepositoryController', RepositoryController);
 
     /* @ngInject */
-    function RepositoryController ($scope, $stateParams, GithubAPI) {
+    function RepositoryController ($scope, $stateParams, moment, GithubAPI) {
         var
             vm = this
         ;
 
-        vm.repository = {};
-        vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
-        vm.series = ['Series A', 'Series B'];
+        vm.repository = [];
         vm.data = [
-            [65, 59, 80, 81, 56, 55, 40],
-            [28, 48, 40, 19, 86, 27, 90]
-        ];
-
-        vm.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+            {
+                'key' : 'Commits' ,
+                'bar': true,
+                'values' : []
+            }];
         vm.options = {
-            scales: {
-                yAxes: [
-                    {
-                        id: 'y-axis-1',
-                        type: 'linear',
-                        display: true,
-                        position: 'left'
+            chart: {
+                type: 'historicalBarChart',
+                height: 450,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 65,
+                    left: 50
+                },
+                x: function(d){return d[0];},
+                y: function(d){return d[1];},
+                showValues: true,
+                valueFormat: function(d){
+                    return d3.format(',.1f')(d);
+                },
+                duration: 100,
+                xAxis: {
+                    axisLabel: '',
+                    tickFormat: function(d) {
+                        return d3.time.format('%x')(new Date(d))
                     },
-                    {
-                        id: 'y-axis-2',
-                        type: 'linear',
-                        display: true,
-                        position: 'right'
+                    rotateLabels: 30,
+                    showMaxMin: false
+                },
+                yAxis: {
+                    axisLabel: 'Commits per day',
+                    axisLabelDistance: -10,
+                    tickFormat: function(d){
+                        return d3.format(',.1f')(d);
                     }
-                ]
+                },
+                tooltip: {
+                    keyFormatter: function(d) {
+                        return d3.time.format('%x')(new Date(d));
+                    }
+                },
+                zoom: {
+                    enabled: false,
+                    scaleExtent: [1, 10],
+                    useFixedDomain: false,
+                    useNiceScale: false,
+                    horizontalOff: false,
+                    verticalOff: true,
+                    unzoomEventType: 'dblclick.zoom'
+                }
             }
         };
 
-        activate();
+        _activate();
 
-        function activate () {
+        function _activate () {
             GithubAPI.getRepositoryCommitsByName($stateParams.repositoryName)
-                .then(function (repository) {
-                    console.log('getrepository concluded', repository);
-                    vm.repository = repository;
+                .then(function (data) {
+                    _populateChart(vm.data[0].values, _normalizeData(data));
                 })
                 .catch(function (error) {
                     console.error('Got a error ' + error.status + ' trying to get remote occurrences.', error);
                 })
             ;
+        }
+
+        function _populateChart (chart, dates) {
+            Object.keys(dates).map(function (value) {
+                chart.push([new Date(value).getTime(), dates[value]]);
+            })
+        }
+
+        function _normalizeData (data) {
+            var aux = {};
+
+            data.map(function (value) {
+                if (aux[moment(value.commit.committer.date).format('YYYY/MM/DD')]) {
+                    aux[moment(value.commit.committer.date).format('YYYY/MM/DD')] += 1;
+                } else {
+                    aux[moment(value.commit.committer.date).format('YYYY/MM/DD')] = 1;
+                }
+            })
+
+            return aux;
         }
     }
 }());

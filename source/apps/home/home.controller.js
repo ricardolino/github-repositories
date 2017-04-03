@@ -15,13 +15,42 @@
         vm.querySearch = querySearch;
         vm.searchText = '';
         vm.selectedItem = null;
+        vm.propertyNames = [
+            {
+                name: 'Name'
+                , slug: 'name'
+            }
+            , {
+                name: 'Created at'
+                , slug: 'created_at'
+            }
+            , {
+                name: 'Updated at'
+                , slug: 'updated_at'
+            }
+            , {
+                name: 'Language'
+                , slug: 'language'
+            }
+            , {
+                name: 'Stars'
+                , slug: '-stargazers_count'
+            }
+            , {
+                name: 'Wachers'
+                , slug: '-watchers_count'
+            }
+            , {
+                name: 'Forks'
+                , slug: '-forks_count'
+            }
+        ]
 
-        activate();
+        _activate();
 
-        function activate () {
+        function _activate () {
             GithubAPI.getRepositories()
                 .then(function (repositories) {
-                    console.log('getRepositories concluded', repositories);
                     vm.repositories = repositories;
                 })
                 .catch(function (error) {
@@ -31,13 +60,15 @@
         }
 
         function querySearch (query) {
-            var results = query ? vm.repositories.filter( createFilterFor(query) ) : vm.repositories;
+            var results = query ? vm.repositories.filter( _createFilterFor(query) ) : vm.repositories;
             return results;
         }
 
-        function createFilterFor (query) {
-            return function filterFn (repository) {
-                return (repository.name.indexOf(query) === 0);
+        function _createFilterFor (query) {
+            return function (repository) {
+                var regex = new RegExp(query, 'i');
+
+                return (regex.test(repository.name) || regex.test(repository.language) || regex.test(repository.description));
             };
         }
     }
